@@ -83,6 +83,7 @@ Powered by popular node packages : ([express](https://github.com/expressjs/expre
 * Column filtering - Fields :fire:  
 * Row filtering - Where :fire:
 * Aggregate functions
+* sum functions
 * Group By, Having (as query params) :fire::fire:  
 * Group By, Having (as a separate API) :fire::fire:  
 * Multiple group by in one API :fire::fire::fire::fire:
@@ -131,7 +132,8 @@ if you haven't on your system.
 | GET       | /api/tableName/distinct          | Distinct row(s) in table - /api/tableName/distinct?_fields=col1|
 | GET       | /api/tableName/:id/exists        | True or false whether a row exists or not              |
 | GET       | [/api/parentTable/:id/childTable](#relational-tables)             | Get list of child table rows with parent table foreign key   | 
-| GET :fire:| [/api/tableName/aggregate](#aggregate-functions)                  | Aggregate results of numeric column(s)                 |
+| GET :fire:| [/api/tableName/aggregate](#aggregate-functions)                  | Aggregate results of numeric column(s)                 | 
+| GET :fire:| [/api/tableName/sum](#sum-functions)                              | sum results of numeric column(s)                       |
 | GET :fire:| [/api/tableName/groupby](#group-by-having-as-api)                 | Group by results of column(s)                          |
 | GET :fire:| [/api/tableName/ugroupby](#union-of-multiple-group-by-statements) | Multiple group by results using one call               |
 | GET :fire:| [/api/tableName/chart](#chart)                                    | Numeric column distribution based on (min,max,step) or(step array) or (automagic)|
@@ -391,7 +393,20 @@ response body
 ]
 ```
 
-eg: retrieves numeric aggregate can be done for multiple columns too 
+eg: retrieves numeric sum can be done for multiple columns too 
+```
+http://localhost:3000/api/orderDetails/sum?_fields=priceEach,quantityOrdered&_where(id, in, "1,2,3")
+
+response body
+[
+    {
+        "priceEach": 271945.42,
+        "quantityOrdered": 105516,
+    }
+]
+```
+
+eg: retrieves numeric sum can be done for multiple columns too 
 
 ## Union of multiple group by statements 
 [:arrow_heading_up:](#api-overview)
